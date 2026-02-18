@@ -51,7 +51,7 @@ export default function EvaluatePage() {
                 formData.append('category', details.category);
                 formData.append('purity', details.karat);
 
-                const response = await fetch('http://localhost:8000/predict', { // Ensure pointing to backend port
+                const response = await fetch('/api/estimate', {
                     method: 'POST',
                     body: formData,
                 });

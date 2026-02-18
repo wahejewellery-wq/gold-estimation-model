@@ -16,7 +16,7 @@ app = FastAPI(title="Gold & Diamond Estimation API")
 # Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://gold-estimation-model.onrender.com/"],  # Frontend URL
+    allow_origins=["*"],  # Allow all origins for Vercel deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,6 +31,7 @@ purity_encoder = None
 
 MODEL_PATH = "../gold_diamond_estimation_model.h5"
 RING_MODEL_PATH = "../gold_diamond_estimator.h5"
+
 CAT_ENCODER_PATH = "cat_encoder.joblib"
 PURITY_ENCODER_PATH = "purity_encoder.joblib"
 

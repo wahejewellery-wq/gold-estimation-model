@@ -23,7 +23,8 @@ export async function POST(request: Request) {
         backendFormData.append('category', category as string);
         backendFormData.append('purity', karat as string); // Backend expects 'purity'
 
-        const backendResponse = await fetch('http://localhost:8000/predict', {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const backendResponse = await fetch(`${API_URL}/predict`, {
             method: 'POST',
             body: backendFormData,
         });
