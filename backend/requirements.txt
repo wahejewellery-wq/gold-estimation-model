@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+scikit-learn
+pandas
+joblib
+pillow
+numpy
+# For Mac M1/M2/M3 compatibility
+tensorflow-macos; sys_platform == 'darwin' and platform_machine == 'arm64'
+tensorflow; sys_platform != 'darwin' or platform_machine != 'arm64'
