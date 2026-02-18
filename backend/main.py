@@ -16,7 +16,7 @@ app = FastAPI(title="Gold & Diamond Estimation API")
 # Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Frontend URL
+    allow_origins=["https://gold-estimation-model.onrender.com/"],  # Frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
