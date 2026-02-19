@@ -31,16 +31,24 @@ export async function POST(request: Request) {
 
         if (!backendResponse.ok) {
             const errorText = await backendResponse.text();
-            throw new Error(`Backend API error: ${backendResponse.status} ${errorText}`);
+            console.error(`Backend API error: ${backendResponse.status}`, errorText);
+            try {
+                // Try to parse as JSON in case the error is structured
+                const errorJson = JSON.parse(errorText);
+                return NextResponse.json({ success: false, error: `Backend error: ${backendResponse.status} ${JSON.stringify(errorJson)}` }, { status: backendResponse.status });
+            } catch (e) {
+                // Fallback for HTML/Plaintext errors (like Render 503)
+                return NextResponse.json({ success: false, error: `Backend unreachable (Status ${backendResponse.status}). The service might be starting up.` }, { status: backendResponse.status });
+            }
         }
 
-        const backendResult = await backendResponse.json();
+        const data = await backendResponse.json();
 
-        if (!backendResult.success) {
+        if (!data.success) {
             throw new Error('Backend returned failure');
         }
 
-        const { gold_weight_g, diamond_weight_ct } = backendResult.data;
+        const { gold_weight_g, diamond_weight_ct } = data.data;
 
         // Valuation Logic
         const CURRENT_GOLD_PRICE_PER_GRAM_24K = 7500; // Approx Market Rate
