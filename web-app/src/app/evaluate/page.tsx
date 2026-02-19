@@ -58,7 +58,14 @@ export default function EvaluatePage() {
                     body: formData,
                 });
 
-                const result = await response.json();
+                let result;
+                try {
+                    result = await response.json();
+                } catch (e) {
+                    console.error("Failed to parse response", e);
+                    throw new Error("Invalid response from server");
+                }
+
                 if (result.success) {
                     setEstimation(result.data);
                     setStep(4);

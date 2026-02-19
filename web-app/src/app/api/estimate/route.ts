@@ -44,8 +44,9 @@ export async function POST(request: Request) {
 
         const data = await backendResponse.json();
 
-        if (!data.success) {
-            throw new Error('Backend returned failure');
+        if (!data || !data.success || !data.data) {
+            console.error("Invalid backend response:", data);
+            throw new Error('Backend returned invalid data structure');
         }
 
         const { gold_weight_g, diamond_weight_ct } = data.data;
