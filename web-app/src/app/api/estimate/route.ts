@@ -4,10 +4,10 @@ export async function POST(request: Request) {
     try {
         const formData = await request.formData();
         const category = formData.get('category');
-        const karat = formData.get('karat');
+        const purity = formData.get('purity');
         const image = formData.get('image');
 
-        if (!category || !karat || !image) {
+        if (!category || !purity || !image) {
             return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
         }
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
         backendFormData.append('image', blob, imageFile.name);
         backendFormData.append('category', category as string);
-        backendFormData.append('purity', karat as string); // Backend expects 'purity'
+        backendFormData.append('purity', purity as string); // Backend expects 'purity'
 
         const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const backendResponse = await fetch(`${API_URL}/predict`, {
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         const CURRENT_GOLD_PRICE_PER_GRAM_24K = 7500; // Approx Market Rate
         const DIAMOND_PRICE_PER_CT = 35000;
 
-        const purityFactor = parseInt(karat as string) / 24;
+        const purityFactor = parseInt(purity as string) / 24;
         const goldValue = gold_weight_g * CURRENT_GOLD_PRICE_PER_GRAM_24K * purityFactor;
         const stoneValue = diamond_weight_ct * DIAMOND_PRICE_PER_CT;
         const totalValue = goldValue + stoneValue;
