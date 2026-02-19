@@ -29,8 +29,8 @@ ring_model = None
 cat_encoder = None
 purity_encoder = None
 
-MODEL_PATH = "../gold_diamond_estimation_model.h5"
-RING_MODEL_PATH = "../gold_diamond_estimator.h5"
+MODEL_PATH = "gold_diamond_estimation_model.h5"
+RING_MODEL_PATH = "gold_diamond_estimator.h5"
 
 CAT_ENCODER_PATH = "cat_encoder.joblib"
 PURITY_ENCODER_PATH = "purity_encoder.joblib"
