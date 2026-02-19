@@ -35,29 +35,40 @@ RING_MODEL_PATH = "gold_diamond_estimator.h5"
 CAT_ENCODER_PATH = "cat_encoder.joblib"
 PURITY_ENCODER_PATH = "purity_encoder.joblib"
 
+# Define a custom Dense layer that ignores 'quantization_config'
+@tf.keras.utils.register_keras_serializable()
+class PatchedDense(tf.keras.layers.Dense):
+    def __init__(self, *args, **kwargs):
+        # Filter out the argument causing issues in Keras 3
+        if 'quantization_config' in kwargs:
+            kwargs.pop('quantization_config')
+        super().__init__(*args, **kwargs)
+
 @app.on_event("startup")
 async def load_artifacts():
     global model, ring_model, cat_encoder, purity_encoder
     try:
         print(f"Startup: TensorFlow Version: {tf.__version__}")
-        # Check for Keras version (TF 2.x bundles Keras)
         try:
              import keras
              print(f"Startup: Keras Version: {keras.__version__}")
         except Exception as k_err:
              print(f"Startup: Could not import keras directly: {k_err}")
 
-        print("Loading models...")
+        print("Loading models with PatchedDense...")
+        
+        custom_objects = {'Dense': PatchedDense}
+
         # Load general model
         if os.path.exists(MODEL_PATH):
-             model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+             model = tf.keras.models.load_model(MODEL_PATH, custom_objects=custom_objects, compile=False)
              print("General Model loaded successfully.")
         else:
             print(f"Error: General Model file not found at {MODEL_PATH}")
 
         # Load ring model
         if os.path.exists(RING_MODEL_PATH):
-             ring_model = tf.keras.models.load_model(RING_MODEL_PATH, compile=False)
+             ring_model = tf.keras.models.load_model(RING_MODEL_PATH, custom_objects=custom_objects, compile=False)
              print("Ring Model loaded successfully.")
         else:
             print(f"Error: Ring Model file not found at {RING_MODEL_PATH}")
