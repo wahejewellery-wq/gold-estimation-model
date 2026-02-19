@@ -39,6 +39,14 @@ PURITY_ENCODER_PATH = "purity_encoder.joblib"
 async def load_artifacts():
     global model, ring_model, cat_encoder, purity_encoder
     try:
+        print(f"Startup: TensorFlow Version: {tf.__version__}")
+        # Check for Keras version (TF 2.x bundles Keras)
+        try:
+             import keras
+             print(f"Startup: Keras Version: {keras.__version__}")
+        except Exception as k_err:
+             print(f"Startup: Could not import keras directly: {k_err}")
+
         print("Loading models...")
         # Load general model
         if os.path.exists(MODEL_PATH):

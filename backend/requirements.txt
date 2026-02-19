@@ -6,6 +6,6 @@ pandas
 joblib
 pillow
 numpy
-# TensorFlow >= 2.18.0 (Supports Keras 3 & compatible with macOS ARM64/Linux)
-tensorflow>=2.18.0
+# TensorFlow 2.20.0 to match training environment (Keras 3)
+tensorflow==2.20.0
 aiofiles
