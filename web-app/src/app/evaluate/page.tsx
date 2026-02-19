@@ -13,6 +13,7 @@ export default function EvaluatePage() {
     const [step, setStep] = useState(1);
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [estimation, setEstimation] = useState(null);
 
     // Form State
@@ -44,6 +45,7 @@ export default function EvaluatePage() {
             setStep(3);
         } else if (step === 3) {
             setLoading(true);
+            setError(null);
             try {
                 // Prepare FormData for API
                 const formData = new FormData();
@@ -62,9 +64,11 @@ export default function EvaluatePage() {
                     setStep(4);
                 } else {
                     console.error("Estimation failed:", result.error);
+                    setError(result.error || "Estimation failed. Please try again.");
                 }
             } catch (error) {
                 console.error("Estimation request failed", error);
+                setError("Network error. Please try again.");
             } finally {
                 setLoading(false);
             }
@@ -193,6 +197,11 @@ export default function EvaluatePage() {
                         <Button onClick={handleNext} disabled={loading} fullWidth>
                             {loading ? 'Analyzing & Valuing...' : 'Get Valuation'}
                         </Button>
+                        {error && (
+                            <p style={{ color: '#ff4444', marginTop: '1rem', textAlign: 'center', background: 'rgba(255,0,0,0.1)', padding: '0.5rem', borderRadius: '4px' }}>
+                                {error}
+                            </p>
+                        )}
                     </div>
                 )}
 
