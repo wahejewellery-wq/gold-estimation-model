@@ -49,23 +49,25 @@ export async function POST(request: Request) {
             throw new Error('Backend returned invalid data structure');
         }
 
-        const { gold_weight_g, diamond_weight_ct } = data.data;
+        const { gold_weight, diamond_weight } = data.data;
+        const goldWeight = gold_weight || 0;
+        const diamondWeight = diamond_weight || 0;
 
         // Valuation Logic
         const CURRENT_GOLD_PRICE_PER_GRAM_24K = 7500; // Approx Market Rate
         const DIAMOND_PRICE_PER_CT = 35000;
 
         const purityFactor = parseInt(purity as string) / 24;
-        const goldValue = gold_weight_g * CURRENT_GOLD_PRICE_PER_GRAM_24K * purityFactor;
-        const stoneValue = diamond_weight_ct * DIAMOND_PRICE_PER_CT;
+        const goldValue = goldWeight * CURRENT_GOLD_PRICE_PER_GRAM_24K * purityFactor;
+        const stoneValue = diamondWeight * DIAMOND_PRICE_PER_CT;
         const totalValue = goldValue + stoneValue;
 
         return NextResponse.json({
             success: true,
             data: {
-                estimated_value: Math.round(totalValue),
-                gold_weight: gold_weight_g,
-                diamond_weight: diamond_weight_ct,
+                estimated_value: Math.round(totalValue || 0),
+                gold_weight: goldWeight,
+                diamond_weight: diamondWeight,
                 breakdown: {
                     gold_value: Math.round(goldValue),
                     stone_value: Math.round(stoneValue)

@@ -217,7 +217,7 @@ export default function EvaluatePage() {
                         <div style={{ marginBottom: '2rem' }}>
                             <span style={{ fontSize: '3rem', display: 'block', marginBottom: '0.5rem' }}>🎊</span>
                             <h2 style={{ fontSize: '2rem', color: 'var(--color-gold-primary)' }}>
-                                ₹{(estimation as any).estimated_value.toLocaleString('en-IN')}
+                                ₹{((estimation as any).estimated_value || 0).toLocaleString('en-IN')}
                             </h2>
                             <p style={{ color: 'var(--color-text-muted)' }}>Total Estimated Value</p>
                         </div>
@@ -242,11 +242,11 @@ export default function EvaluatePage() {
                             <h3 style={{ marginTop: '1rem', marginBottom: '1rem', color: 'var(--color-gold-light)' }}>Valuation Breakdown</h3>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                 <span style={{ color: 'var(--color-text-muted)' }}>Gold Value ({details.karat}K):</span>
-                                <span>₹{(estimation as any).breakdown.gold_value.toLocaleString('en-IN')}</span>
+                                <span>₹{((estimation as any).breakdown.gold_value || 0).toLocaleString('en-IN')}</span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                 <span style={{ color: 'var(--color-text-muted)' }}>Diamond Value:</span>
-                                <span>₹{(estimation as any).breakdown.stone_value.toLocaleString('en-IN')}</span>
+                                <span>₹{((estimation as any).breakdown.stone_value || 0).toLocaleString('en-IN')}</span>
                             </div>
                         </div>
 
