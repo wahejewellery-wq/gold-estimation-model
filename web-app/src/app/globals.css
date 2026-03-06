@@ -1,12 +1,22 @@
 :root {
-  --color-gold-primary: #D4AF37;
-  --color-gold-light: #F1D06E;
-  --color-gold-dark: #aa8c2c;
-  --color-dark-bg: #0F0F0F;
-  --color-card-bg: #1A1A1A;
-  --color-text-main: #FFFFFF;
-  --color-text-muted: #A0A0A0;
-  --color-border: #333333;
+  --color-gold-primary: #733004;
+  --color-gold-light: #D2B48C;
+  --color-gold-dark: #3E1A02;
+  --color-dark-bg: #FFFFFF;
+  --color-card-bg: #FAF9F6;
+  --color-text-main: #1A1A1A;
+  --color-text-muted: #666666;
+  --color-border: #E5E5E5;
+
+  /* Theme Colors */
+  --color-unvault-bg: #FAF9F6;
+  /* Soft off-white/cream */
+  --color-unvault-card: #FFFFFF;
+  --color-unvault-text: #111827;
+  /* Dark slate */
+  --color-unvault-muted: #6B7280;
+  --color-unvault-primary: #733004;
+  /* Signature brown */
 }
 
 body {
@@ -17,7 +27,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif), serif;
   color: var(--color-gold-primary);
   font-weight: 600;
